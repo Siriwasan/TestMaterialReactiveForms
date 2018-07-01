@@ -28,10 +28,7 @@ export class HierarchyHelper {
       if (e.conditions !== undefined) {
         // subscribe value change to each control
         this.form.get(e.control).valueChanges.subscribe(val => {
-          console.log(e.control + ' ' + val);
-          console.log(val);
           e.conditions.forEach(i => {
-            console.log(i.value);
             if (!this.isEquivalent(val, i.value)) {
               i.subcontrols.forEach(a => {
                 this.form.get(a.control).reset();

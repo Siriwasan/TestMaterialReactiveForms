@@ -4,6 +4,8 @@
     <input matInput placeholder="First Name" formControlName="firstName">
   </mat-form-field>
 
+  <h2>Group 1</h2>
+
   <div class="label-text" *ngIf="hierarchyHelper.showHierarchy('radioGroup1')">
     Radio Group 1:
     <mat-radio-group class="example-radio-group" formControlName="radioGroup1">
@@ -53,7 +55,45 @@
     <input matInput placeholder="Address" formControlName="address">
   </mat-form-field>
 
+  <h2>Group 2</h2>
+
+  <div class="label-text" *ngIf="hierarchyHelper.showHierarchy('radioGroup2')">
+    Radio Group 2:
+    <mat-radio-group class="example-radio-group" formControlName="radioGroup2">
+      <mat-radio-button class="example-radio-button" value="Yes">Yes</mat-radio-button>
+      <mat-radio-button class="example-radio-button" value="No">No</mat-radio-button>
+      <mat-radio-button class="example-radio-button" value="Other">Other</mat-radio-button>
+    </mat-radio-group>
+  </div>
+
+
+  <div class="label-text" *ngIf="hierarchyHelper.showHierarchy('radioGroup2_1')">
+    Radio Group 2.1:
+    <mat-radio-group class="example-radio-group" formControlName="radioGroup2_1">
+      <mat-radio-button class="example-radio-button" value="Good">Good</mat-radio-button>
+      <mat-radio-button class="example-radio-button" value="Bad">Bad</mat-radio-button>
+      <mat-radio-button class="example-radio-button" value="Wow">Wow</mat-radio-button>
+    </mat-radio-group>
+  </div>
+
+  <mat-form-field class="example-full-width" *ngIf="hierarchyHelper.showHierarchy('select1')">
+    <mat-select placeholder="Favorite food" formControlName="select1">
+      <mat-option value="Steak">Steak</mat-option>
+      <mat-option value="Pizza">Pizza</mat-option>
+      <mat-option value="Tacos">Tacos</mat-option>
+    </mat-select>
+  </mat-form-field>
+
+  <mat-form-field class="example-full-width" *ngIf="hierarchyHelper.showHierarchy('dateOfBirth')">
+    <input matInput [matDatepicker]="picker" placeholder="Date of Birth" formControlName="dateOfBirth">
+    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+    <mat-datepicker #picker></mat-datepicker>
+  </mat-form-field>
+
 </form>
+
+<br>
+<br>
 
 <div class="label-text">
     Form value: {{ testForm.value | json }}
