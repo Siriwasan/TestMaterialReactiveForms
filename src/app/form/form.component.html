@@ -1,10 +1,10 @@
 <form class="example-form" [formGroup]="testForm">
 
-  <mat-form-field class="example-full-width" *ngIf="showHierarchy('firstName')">
+  <mat-form-field class="example-full-width" *ngIf="hierarchyHelper.showHierarchy('firstName')">
     <input matInput placeholder="First Name" formControlName="firstName">
   </mat-form-field>
 
-  <div class="label-text" *ngIf="showHierarchy('radioGroup1')">
+  <div class="label-text" *ngIf="hierarchyHelper.showHierarchy('radioGroup1')">
     Radio Group 1:
     <mat-radio-group class="example-radio-group" formControlName="radioGroup1">
       <mat-radio-button class="example-radio-button" value="Yes">Yes</mat-radio-button>
@@ -14,7 +14,7 @@
   </div>
 
 
-  <div class="label-text" *ngIf="showHierarchy('radioGroup1_1')">
+  <div class="label-text" *ngIf="hierarchyHelper.showHierarchy('radioGroup1_1')">
     Radio Group 1.1:
     <mat-radio-group class="example-radio-group" formControlName="radioGroup1_1">
       <mat-radio-button class="example-radio-button" value="Good">Good</mat-radio-button>
@@ -23,16 +23,16 @@
     </mat-radio-group>
   </div>
 
-  <div class="label-text" *ngIf="showHierarchy('radioGroup1_2')">
+  <div class="label-text" *ngIf="hierarchyHelper.showHierarchy('radioGroup1_2')">
     Radio Group 1.2:
     <mat-radio-group class="example-radio-group" formControlName="radioGroup1_2">
-      <mat-radio-button class="example-radio-button" value="{{100}}">100</mat-radio-button>
-      <mat-radio-button class="example-radio-button" value="{{200}}">200</mat-radio-button>
-      <mat-radio-button class="example-radio-button" value="{{300}}">300</mat-radio-button>
+      <mat-radio-button class="example-radio-button" value="100">100</mat-radio-button>
+      <mat-radio-button class="example-radio-button" value="200">200</mat-radio-button>
+      <mat-radio-button class="example-radio-button" value="300">300</mat-radio-button>
     </mat-radio-group>
   </div>
 
-  <div class="label-text" *ngIf="showHierarchy('radioGroup1_3')">
+  <div class="label-text" *ngIf="hierarchyHelper.showHierarchy('radioGroup1_3')">
     Radio Group 1.3:
     <mat-radio-group class="example-radio-group" formControlName="radioGroup1_3">
       <mat-radio-button class="example-radio-button" value="Left">Left</mat-radio-button>
@@ -42,14 +42,14 @@
   </div>
 
 
-  <div class="label-text" formGroupName="checkBoxGroup" *ngIf="showHierarchy('checkBoxGroup')">
+  <div class="label-text" formGroupName="checkBoxGroup" *ngIf="hierarchyHelper.showHierarchy('checkBoxGroup')">
     Check Box:
     <mat-checkbox class="example-check-box" indeterminate="true" formControlName="checkBox1">White</mat-checkbox>
     <mat-checkbox class="example-check-box" indeterminate="true" formControlName="checkBox2">Black</mat-checkbox>
     <mat-checkbox class="example-check-box" indeterminate="true" formControlName="checkBox3">Gray</mat-checkbox>
   </div>
 
-  <mat-form-field class="example-full-width" *ngIf="showHierarchy('address')">
+  <mat-form-field class="example-full-width" *ngIf="hierarchyHelper.showHierarchy('address')">
     <input matInput placeholder="Address" formControlName="address">
   </mat-form-field>
 
