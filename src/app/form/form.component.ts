@@ -23,6 +23,7 @@ import { DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE } from '@angular/materia
 export class FormComponent implements OnInit {
   testForm: FormGroup;
   hierarchyHelper = new HierarchyHelper();
+  result: object;
 
   // hierarchy = [{
   //   control: 'radioGroup1', conditions: [{
@@ -98,9 +99,19 @@ export class FormComponent implements OnInit {
     });
   }
 
-  clickMe() {
-    const i = Number(this.testForm.value.radioGroup1_2);
-    this.testForm.get('radioGroup1_2').setValue(i);
-    console.log(i);
+  submit() {
+    // const i = Number(this.testForm.value.radioGroup1_2);
+    // this.testForm.get('radioGroup1_2').setValue(i);
+    // console.log(i);
+
+    this.result = {...this.testForm.value};
+  }
+
+  clear() {
+    this.testForm.reset();
+  }
+
+  load() {
+    this.testForm.setValue(this.result);
   }
 }

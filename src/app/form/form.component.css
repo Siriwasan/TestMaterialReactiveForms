@@ -19,6 +19,10 @@
   margin: 5px;
 }
 
+.example-button {
+  margin: 5px;
+}
+
 ::ng-deep .mat-checkbox-indeterminate.mat-accent .mat-checkbox-background {
   background: gray;
 }

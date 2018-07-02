@@ -46,9 +46,9 @@
 
   <div class="label-text" formGroupName="checkBoxGroup" *ngIf="hierarchyHelper.showHierarchy('checkBoxGroup')">
     Check Box:
-    <mat-checkbox class="example-check-box" indeterminate="true" formControlName="checkBox1">White</mat-checkbox>
-    <mat-checkbox class="example-check-box" indeterminate="true" formControlName="checkBox2">Black</mat-checkbox>
-    <mat-checkbox class="example-check-box" indeterminate="true" formControlName="checkBox3">Gray</mat-checkbox>
+    <mat-checkbox class="example-check-box" formControlName="checkBox1">White</mat-checkbox>
+    <mat-checkbox class="example-check-box" formControlName="checkBox2">Black</mat-checkbox>
+    <mat-checkbox class="example-check-box" formControlName="checkBox3">Gray</mat-checkbox>
   </div>
 
   <mat-form-field class="example-full-width" *ngIf="hierarchyHelper.showHierarchy('address')">
@@ -95,8 +95,19 @@
 <br>
 <br>
 
+<button mat-raised-button color="primary" class="example-button" (click)="submit()">Submit</button>
+<button mat-raised-button color="warn" class="example-button" (click)="clear()">Clear</button>
+<button mat-raised-button color="accent" class="example-button" (click)="load()">Load</button>
+
+<br>
+<br>
+
 <div class="label-text">
     Form value: {{ testForm.value | json }}
 </div>
 
-<button mat-button (click)="clickMe()">Click me!</button>
+<br>
+
+<div class="label-text">
+    Form value: {{ result | json }}
+</div>

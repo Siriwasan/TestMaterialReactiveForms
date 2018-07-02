@@ -16,3 +16,12 @@ Note that @angular/material@6.3.0 broken
 npm install --save moment
 npm install --save @angular/material-moment-adapter
 ```
+
+## Set host
+
+ng serve --host=0.0.0.0
+
+or
+
+in the .angular-cli.json file
+"defaults": { "serve": { "host": "0.0.0.0", "port": 4201 },
