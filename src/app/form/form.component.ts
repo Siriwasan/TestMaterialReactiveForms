@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
-import { HierarchyHelper } from '../helper/hierarchy.helper';
 import { MAT_MOMENT_DATE_FORMATS, MomentDateAdapter } from '@angular/material-moment-adapter';
 import { DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE } from '@angular/material/core';
+
+import { HierarchyHelper, Control } from '../helper/hierarchy.helper';
 
 @Component({
   selector: 'app-form',
@@ -25,24 +26,7 @@ export class FormComponent implements OnInit {
   hierarchyHelper = new HierarchyHelper();
   result: object;
 
-  // hierarchy = [{
-  //   control: 'radioGroup1', conditions: [{
-  //     value: 'Other', subcontrols: [{
-  //       control: 'radioGroup1_1', conditions: [{
-  //         value: 'Wow', subcontrols: [{
-  //           control: 'radioGroup1_2', conditions: [{
-  //             value: 'Middle', subcontrols: [{
-  //               control: 'radioGroup1_3'}]
-  //           }]
-  //         }]
-  //       }]
-  //     }, {
-  //       control: 'checkBoxGroup'
-  //     }]
-  //   }]
-  // }];
-
-  hierarchy = [{
+  hierarchy: Control[] = [{
     control: 'radioGroup1', conditions: [{
       value: 'Other', subcontrols: [{
         control: 'radioGroup1_1', conditions: [{

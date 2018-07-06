@@ -1,5 +1,14 @@
 import { FormGroup } from '@angular/forms';
 
+export interface Control {
+  control: string;
+  conditions?: Condition[];
+}
+
+export interface Condition {
+  value: any;
+  subcontrols: Control[];
+}
 interface HierarchyNode {
   control: string;
   parentControl: string;
@@ -8,7 +17,7 @@ interface HierarchyNode {
 
 export class HierarchyHelper {
   form: FormGroup;
-  hierarchy: any[];
+  hierarchy: Control[];
   hierarchyNodes: HierarchyNode[] = [];
 
   constructor() { }
