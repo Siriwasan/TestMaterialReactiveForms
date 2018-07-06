@@ -4,17 +4,34 @@
     <input matInput placeholder="First Name" formControlName="firstName">
   </mat-form-field>
 
-  <h2>Group 1</h2>
-
-  <div class="label-text" *ngIf="hierarchyHelper.showHierarchy('radioGroup1')">
-    Radio Group 1:
-    <mat-radio-group class="example-radio-group" formControlName="radioGroup1">
-      <mat-radio-button class="example-radio-button" value="Yes">Yes</mat-radio-button>
-      <mat-radio-button class="example-radio-button" value="No">No</mat-radio-button>
-      <mat-radio-button class="example-radio-button" value="Other">Other</mat-radio-button>
+  <div class="label-text">
+    Sex:
+    <mat-radio-group class="example-radio-group" formControlName="sex">
+      <mat-radio-button class="example-radio-button" value="Male">Male</mat-radio-button>
+      <mat-radio-button class="example-radio-button" value="Female">Female</mat-radio-button>
     </mat-radio-group>
   </div>
 
+  <mat-form-field class="example-full-width">
+    <input matInput [matDatepicker]="picker" placeholder="Date of Birth" formControlName="dateOfBirth">
+    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+    <mat-datepicker #picker></mat-datepicker>
+  </mat-form-field>
+
+  <h2>Group 1</h2>
+
+  <div class="label-text" *ngIf="hierarchyHelper.showHierarchy('maritalStatus')">
+    Marrital Status:
+    <mat-radio-group class="example-radio-group" formControlName="maritalStatus">
+      <mat-radio-button class="example-radio-button" value="Single">Single</mat-radio-button>
+      <mat-radio-button class="example-radio-button" value="Married">Married</mat-radio-button>
+      <mat-radio-button class="example-radio-button" value="Divorce">Divorce</mat-radio-button>
+    </mat-radio-group>
+  </div>
+
+  <mat-form-field class="example-full-width" *ngIf="hierarchyHelper.showHierarchy('numberOfChild')">
+    <input matInput type="number" placeholder="Number of child" formControlName="numberOfChild">
+  </mat-form-field>
 
   <div class="label-text" *ngIf="hierarchyHelper.showHierarchy('radioGroup1_1')">
     Radio Group 1.1:
@@ -42,7 +59,6 @@
       <mat-radio-button class="example-radio-button" value="Right">Right</mat-radio-button>
     </mat-radio-group>
   </div>
-
 
   <div class="label-text" formGroupName="checkBoxGroup" *ngIf="hierarchyHelper.showHierarchy('checkBoxGroup')">
     Check Box:
@@ -84,12 +100,6 @@
     </mat-select>
   </mat-form-field>
 
-  <mat-form-field class="example-full-width" *ngIf="hierarchyHelper.showHierarchy('dateOfBirth')">
-    <input matInput [matDatepicker]="picker" placeholder="Date of Birth" formControlName="dateOfBirth">
-    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-    <mat-datepicker #picker></mat-datepicker>
-  </mat-form-field>
-
 </form>
 
 <br>
@@ -97,7 +107,7 @@
 
 <button mat-raised-button color="primary" class="example-button" (click)="submit()">Submit</button>
 <button mat-raised-button color="warn" class="example-button" (click)="clear()">Clear</button>
-<button mat-raised-button color="accent" class="example-button" (click)="load()">Load</button>
+<button mat-raised-button color="accent" [disabled]="result===undefined" class="example-button" (click)="load()">Load</button>
 
 <br>
 <br>

@@ -2,77 +2,106 @@ import { FormGroup } from '@angular/forms';
 
 export interface Control {
   control: string;
-  conditions?: Condition[];
+  conditions?: Condition[]; // one control can have no condition or many conditions
 }
 
 export interface Condition {
-  value: any;
-  subcontrols: Control[];
+  values: any[]; // difference conditions can have same result
+  subcontrols: Control[]; // one result can have many control
 }
 interface HierarchyNode {
   control: string;
   parentControl: string;
-  condition: string;
+  conditionValues: string;
 }
 
 export class HierarchyHelper {
-  form: FormGroup;
-  hierarchy: Control[];
-  hierarchyNodes: HierarchyNode[] = [];
+  private formGroup: FormGroup;
+  private hierarchy: Control[];
+  private hierarchyNodes: HierarchyNode[] = [];
+  private isAlwayShow = false;
 
   constructor() { }
 
   initializeHierarchy(form: FormGroup, hierarchy: any[]) {
-    this.form = form;
+    this.formGroup = form;
     this.hierarchy = hierarchy;
 
+    // this.createHierarchyNodes(this.hierarchy, {control: null, parentControl: null, conditionValues: null});
+    this.createHierarchyNodes(this.hierarchy);
     this.subscribeValueChanges(this.hierarchy);
-    this.createHierarchyNodes(this.hierarchy, {control: null, parentControl: null, condition: null});
 
     console.log(this.hierarchyNodes);
   }
 
-  private subscribeValueChanges(controls: any[]) {
-    controls.forEach(e => {
-      if (e.conditions !== undefined) {
-        // subscribe value change to each control
-        this.form.get(e.control).valueChanges.subscribe(val => {
-          e.conditions.forEach(i => {
-            if (!this.isEquivalent(val, i.value)) {
-              i.subcontrols.forEach(a => {
-                this.form.get(a.control).reset();
-              });
-            }
-          });
+  private createHierarchyNodes(controls: any[], parentNode: HierarchyNode = {control: null, parentControl: null, conditionValues: null}) {
+    controls.forEach(control => {
+      const newNode = {control: control.control, parentControl: parentNode.parentControl, conditionValues: parentNode.conditionValues};
+      this.hierarchyNodes.push(newNode);
+      if (control.conditions !== undefined) {
+        control.conditions.forEach(condition => {
+          const childNode = {control: null, parentControl: control.control, conditionValues: condition.values};
+          this.createHierarchyNodes(condition.subcontrols, childNode);
         });
-        // recursive subscribe to subcontrols
-        e.conditions.forEach(n => this.subscribeValueChanges(n.subcontrols));
       }
     });
   }
 
-  private createHierarchyNodes(controls: any[], parentNode: HierarchyNode) {
-    controls.forEach(e => {
-      const newNode = {control: e.control, parentControl: parentNode.parentControl, condition: parentNode.condition};
-      this.hierarchyNodes.push(newNode);
-      if (e.conditions !== undefined) {
-        e.conditions.forEach(i => {
-          const childNode = {control: null, parentControl: e.control, condition: i.value};
-          this.createHierarchyNodes(i.subcontrols, childNode);
+  private subscribeValueChanges(controls: any[]) {
+    controls.forEach(control => {
+      if (control.conditions !== undefined) {
+        // subscribe value change to each control
+        this.formGroup.get(control.control).valueChanges.subscribe(newValue => {
+          const oldValue = this.formGroup.value[control.control];
+
+          for (let index = 0; index < control.conditions.length; index++) {
+            const condition = control.conditions[index];
+
+            // if old value is in hierarchy, reset controls
+            if (condition.values.indexOf(oldValue) >= 0) {
+              // in case of new and old value are in same condition, don't reset control
+              if (condition.values.indexOf(newValue) >= 0) {
+                break;
+              }
+
+              // otherwise, reset previous condition controls
+              condition.subcontrols.forEach(a => {
+                this.formGroup.get(a.control).reset();
+              });
+            }
+          }
         });
+        // recursive subscribe to subcontrols
+        control.conditions.forEach(consition => this.subscribeValueChanges(consition.subcontrols));
       }
     });
   }
 
   showHierarchy(control: string): boolean {
-    const targetNode = this.hierarchyNodes.find(e => e.control === control);
+    if (this.isAlwayShow) {
+      return true;
+    }
+
+    const targetNode = this.hierarchyNodes.find(node => node.control === control);
 
     // alway show if could not find control in hierarchy
     if (targetNode === undefined || targetNode.parentControl === null) {
       return true;
     }
 
-    return this.isEquivalent(this.form.get(targetNode.parentControl).value, targetNode.condition);
+    for (let index = 0; index < targetNode.conditionValues.length; index++) {
+      const value = targetNode.conditionValues[index];
+
+      if (this.isEquivalent(this.formGroup.get(targetNode.parentControl).value, value)) {
+        return true;
+      }
+    }
+
+    return false;
+  }
+
+  alwayShow(show: boolean = true) {
+    this.isAlwayShow = show;
   }
 
   private isEquivalent(a: any, b: any): boolean {
