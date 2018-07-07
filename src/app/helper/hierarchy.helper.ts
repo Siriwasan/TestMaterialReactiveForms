@@ -1,7 +1,7 @@
 import { FormGroup } from '@angular/forms';
 
 export interface Control {
-  control: string;
+  name: string;
   conditions?: Condition[]; // one control can have no condition or many conditions
 }
 
@@ -10,7 +10,7 @@ export interface Condition {
   subcontrols: Control[]; // one result can have many control
 }
 interface HierarchyNode {
-  control: string;
+  controlName: string;
   parentControl: string;
   conditionValues: string;
 }
@@ -27,20 +27,31 @@ export class HierarchyHelper {
     this.formGroup = form;
     this.hierarchy = hierarchy;
 
-    // this.createHierarchyNodes(this.hierarchy, {control: null, parentControl: null, conditionValues: null});
     this.createHierarchyNodes(this.hierarchy);
     this.subscribeValueChanges(this.hierarchy);
 
     console.log(this.hierarchyNodes);
   }
 
-  private createHierarchyNodes(controls: any[], parentNode: HierarchyNode = {control: null, parentControl: null, conditionValues: null}) {
+  private createHierarchyNodes(controls: any[], parentNode: HierarchyNode =
+        {controlName: null, parentControl: null, conditionValues: null}) {
     controls.forEach(control => {
-      const newNode = {control: control.control, parentControl: parentNode.parentControl, conditionValues: parentNode.conditionValues};
+      const newNode: HierarchyNode = {
+        controlName: control.name,
+        parentControl: parentNode.parentControl,
+        conditionValues: parentNode.conditionValues
+      };
+
       this.hierarchyNodes.push(newNode);
+
       if (control.conditions !== undefined) {
         control.conditions.forEach(condition => {
-          const childNode = {control: null, parentControl: control.control, conditionValues: condition.values};
+          const childNode: HierarchyNode = {
+            controlName: null,
+            parentControl: control.name,
+            conditionValues: condition.values
+          };
+
           this.createHierarchyNodes(condition.subcontrols, childNode);
         });
       }
@@ -51,8 +62,8 @@ export class HierarchyHelper {
     controls.forEach(control => {
       if (control.conditions !== undefined) {
         // subscribe value change to each control
-        this.formGroup.get(control.control).valueChanges.subscribe(newValue => {
-          const oldValue = this.formGroup.value[control.control];
+        this.formGroup.get(control.name).valueChanges.subscribe(newValue => {
+          const oldValue = this.formGroup.value[control.name];
 
           for (let index = 0; index < control.conditions.length; index++) {
             const condition = control.conditions[index];
@@ -65,8 +76,8 @@ export class HierarchyHelper {
               }
 
               // otherwise, reset previous condition controls
-              condition.subcontrols.forEach(a => {
-                this.formGroup.get(a.control).reset();
+              condition.subcontrols.forEach(subcontrol => {
+                this.formGroup.get(subcontrol.name).reset();
               });
             }
           }
@@ -77,12 +88,12 @@ export class HierarchyHelper {
     });
   }
 
-  showHierarchy(control: string): boolean {
+  showHierarchy(controlName: string): boolean {
     if (this.isAlwayShow) {
       return true;
     }
 
-    const targetNode = this.hierarchyNodes.find(node => node.control === control);
+    const targetNode = this.hierarchyNodes.find(node => node.controlName === controlName);
 
     // alway show if could not find control in hierarchy
     if (targetNode === undefined || targetNode.parentControl === null) {

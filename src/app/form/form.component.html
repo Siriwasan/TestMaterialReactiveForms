@@ -71,6 +71,15 @@
     <input matInput placeholder="Address" formControlName="address">
   </mat-form-field>
 
+  <div class="label-text" *ngIf="hierarchyHelper.showHierarchy('radioGroup1_4')">
+    Radio Group 1.4:
+    <mat-radio-group class="example-radio-group" formControlName="radioGroup1_4">
+      <mat-radio-button class="example-radio-button" value="Left">Left</mat-radio-button>
+      <mat-radio-button class="example-radio-button" value="Middle">Middle</mat-radio-button>
+      <mat-radio-button class="example-radio-button" value="Right">Right</mat-radio-button>
+    </mat-radio-group>
+  </div>
+
   <h2>Group 2</h2>
 
   <div class="label-text" *ngIf="hierarchyHelper.showHierarchy('radioGroup2')">

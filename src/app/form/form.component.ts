@@ -27,27 +27,29 @@ export class FormComponent implements OnInit {
   result: object;
 
   hierarchy: Control[] = [{
-    control: 'maritalStatus', conditions: [{
+    name: 'maritalStatus', conditions: [{
       values: ['Married', 'Divorce'], subcontrols: [{
-        control: 'numberOfChild'}, {
-        control: 'radioGroup1_1', conditions: [{
+        name: 'numberOfChild'}, {
+        name: 'radioGroup1_1', conditions: [{
           values: ['Good', 'Wow'], subcontrols: [{
-            control: 'radioGroup1_2', conditions: [{
+            name: 'radioGroup1_2', conditions: [{
               values: ['200'], subcontrols: [{
-                control: 'radioGroup1_3'}]}]}]}]}, {
-        control: 'checkBoxGroup', conditions: [{
+                name: 'radioGroup1_3'}]}]}]}]}, {
+        name: 'checkBoxGroup', conditions: [{
           values: [{checkBox1: null, checkBox3: true, checkBox2: null}], subcontrols: [{
-            control: 'address'
+            name: 'address'
+          }, {
+            name: 'radioGroup1_4'
           }]
         }]
       }]
     }]
   }, {
-    control: 'radioGroup2', conditions: [{
+    name: 'radioGroup2', conditions: [{
       values: ['Yes'], subcontrols: [{
-        control: 'radioGroup2_1'
+        name: 'radioGroup2_1'
       }, {
-        control: 'select1'
+        name: 'select1'
       }]
     }]
   }];
@@ -69,6 +71,7 @@ export class FormComponent implements OnInit {
       radioGroup1_1: null,
       radioGroup1_2: null,
       radioGroup1_3: null,
+      radioGroup1_4: null,
       checkBoxGroup: this.formBuilder.group({
         checkBox1: null,
         checkBox2: null,
