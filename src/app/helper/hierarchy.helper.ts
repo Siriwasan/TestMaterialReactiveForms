@@ -69,9 +69,9 @@ export class HierarchyHelper {
             const condition = control.conditions[index];
 
             // if old value is in hierarchy, reset controls
-            if (condition.values.indexOf(oldValue) >= 0) {
+            if (condition.values.find(o => this.isEquivalent(o, oldValue)) !== undefined) {
               // in case of new and old value are in same condition, don't reset control
-              if (condition.values.indexOf(newValue) >= 0) {
+              if (condition.values.find(o => this.isEquivalent(o, newValue)) !== undefined) {
                 break;
               }
 

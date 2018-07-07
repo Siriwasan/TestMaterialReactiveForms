@@ -36,7 +36,7 @@ export class FormComponent implements OnInit {
               values: ['200'], subcontrols: [{
                 name: 'radioGroup1_3'}]}]}]}]}, {
         name: 'checkBoxGroup', conditions: [{
-          values: [{checkBox1: null, checkBox3: true, checkBox2: null}], subcontrols: [{
+          values: [{checkBox1: null, checkBox2: false, checkBox3: true}], subcontrols: [{
             name: 'address'
           }, {
             name: 'radioGroup1_4'
