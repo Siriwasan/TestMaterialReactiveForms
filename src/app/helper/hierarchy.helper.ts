@@ -34,7 +34,7 @@ export class HierarchyHelper {
   }
 
   private createHierarchyNodes(controls: any[], parentNode: HierarchyNode =
-        {controlName: null, parentControl: null, conditionValues: null}) {
+    { controlName: null, parentControl: null, conditionValues: null }) {
     controls.forEach(control => {
       const newNode: HierarchyNode = {
         controlName: control.name,
@@ -64,6 +64,9 @@ export class HierarchyHelper {
         // subscribe value change to each control
         this.formGroup.get(control.name).valueChanges.subscribe(newValue => {
           const oldValue = this.formGroup.value[control.name];
+          // console.log(oldValue + ': ' + newValue);
+          // console.log(control.name);
+          // console.log(control.conditions);
 
           for (let index = 0; index < control.conditions.length; index++) {
             const condition = control.conditions[index];
@@ -72,7 +75,7 @@ export class HierarchyHelper {
             if (condition.values.find(o => this.isEquivalent(o, oldValue)) !== undefined) {
               // in case of new and old value are in same condition, don't reset control
               if (condition.values.find(o => this.isEquivalent(o, newValue)) !== undefined) {
-                break;
+                continue;
               }
 
               // otherwise, reset previous condition controls
@@ -134,17 +137,17 @@ export class HierarchyHelper {
     // If number of properties is different,
     // objects are not equivalent
     if (aProps.length !== bProps.length) {
-        return false;
+      return false;
     }
 
     for (let i = 0; i < aProps.length; i++) {
       const propName = aProps[i];
 
-        // If values of same property are not equal,
-        // objects are not equivalent
-        if (a[propName] !== b[propName]) {
-            return false;
-        }
+      // If values of same property are not equal,
+      // objects are not equivalent
+      if (a[propName] !== b[propName]) {
+        return false;
+      }
     }
 
     // If we made it this far, objects

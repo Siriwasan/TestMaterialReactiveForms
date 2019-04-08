@@ -12,13 +12,13 @@ import { HierarchyHelper, Control } from '../helper/hierarchy.helper';
   providers: [
     // The locale would typically be provided on the root module of your application. We do it at
     // the component level here, due to limitations of our example generation script.
-    {provide: MAT_DATE_LOCALE, useValue: 'en-GB'},
+    { provide: MAT_DATE_LOCALE, useValue: 'en-GB' },
 
     // `MomentDateAdapter` and `MAT_MOMENT_DATE_FORMATS` can be automatically provided by importing
     // `MatMomentDateModule` in your applications root module. We provide it at the component level
     // here, due to limitations of our example generation script.
-    {provide: DateAdapter, useClass: MomentDateAdapter, deps: [MAT_DATE_LOCALE]},
-    {provide: MAT_DATE_FORMATS, useValue: MAT_MOMENT_DATE_FORMATS},
+    { provide: DateAdapter, useClass: MomentDateAdapter, deps: [MAT_DATE_LOCALE] },
+    { provide: MAT_DATE_FORMATS, useValue: MAT_MOMENT_DATE_FORMATS },
   ]
 })
 export class FormComponent implements OnInit {
@@ -28,15 +28,23 @@ export class FormComponent implements OnInit {
 
   hierarchy: Control[] = [{
     name: 'maritalStatus', conditions: [{
-      values: ['Married', 'Divorce'], subcontrols: [{
-        name: 'numberOfChild'}, {
+      values: ['Married'], subcontrols: [{
+        name: 'numberOfChild'
+      }, {
         name: 'radioGroup1_1', conditions: [{
           values: ['Good', 'Wow'], subcontrols: [{
             name: 'radioGroup1_2', conditions: [{
               values: ['200'], subcontrols: [{
-                name: 'radioGroup1_3'}]}]}]}]}, {
+                name: 'radioGroup1_3'
+              }]
+            }]
+          }]
+        }]
+      }]
+    }, {
+      values: ['Married', 'Divorce'], subcontrols: [{
         name: 'checkBoxGroup', conditions: [{
-          values: [{checkBox1: null, checkBox2: false, checkBox3: true}], subcontrols: [{
+          values: [{ checkBox1: null, checkBox2: false, checkBox3: true }], subcontrols: [{
             name: 'address'
           }, {
             name: 'radioGroup1_4'
@@ -57,6 +65,7 @@ export class FormComponent implements OnInit {
   constructor(private formBuilder: FormBuilder) {
     this.createForm();
     this.hierarchyHelper.initializeHierarchy(this.testForm, this.hierarchy);
+    // this.hierarchyHelper.alwayShow();
   }
 
   ngOnInit() {
@@ -90,7 +99,7 @@ export class FormComponent implements OnInit {
     // this.testForm.get('radioGroup1_2').setValue(i);
     // console.log(i);
 
-    this.result = {...this.testForm.value};
+    this.result = { ...this.testForm.value };
   }
 
   clear() {
