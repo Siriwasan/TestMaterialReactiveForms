@@ -26,6 +26,7 @@
               {
                 "input": "node_modules/@angular/material/prebuilt-themes/indigo-pink.css"
               },
+              "node_modules/@coachcare/datepicker/prebuilt-themes/indigo-pink.css",
               "src/styles.css"
             ],
             "scripts": []

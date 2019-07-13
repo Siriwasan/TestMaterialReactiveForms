@@ -9,16 +9,15 @@ import {
   MatRadioModule,
   MatCheckboxModule,
   MatButtonModule,
-  MatDatepickerModule,
+  // MatDatepickerModule,
   MatNativeDateModule,
   MatSelectModule} from '@angular/material';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 
+import { MatDatepickerModule, MatMomentDateModule } from '@coachcare/datepicker';
+
 @NgModule({
-  declarations: [
-    AppComponent,
-    FormComponent
-  ],
+  declarations: [AppComponent, FormComponent],
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
@@ -30,9 +29,10 @@ import { ReactiveFormsModule, FormsModule } from '@angular/forms';
     MatButtonModule,
     MatDatepickerModule,
     MatNativeDateModule,
-    MatSelectModule
-],
+    MatSelectModule,
+    MatMomentDateModule
+  ],
   providers: [],
   bootstrap: [AppComponent]
 })
-export class AppModule { }
+export class AppModule {}
